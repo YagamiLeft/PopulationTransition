@@ -15,9 +15,6 @@ export const PopulationTransitionTemplate: React.FC<PopulationTransitionTemplate
   onChangeCheckbox,
 }) => {
   const option = {
-    title: {
-      text: 'Stacked Line',
-    },
     tooltip: {
       trigger: 'axis',
     },
