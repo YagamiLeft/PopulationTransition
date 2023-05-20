@@ -2,13 +2,13 @@ import React from 'react';
 
 export type CheckboxComponentProps = {
   label: string;
-  onChangeCheckbox: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeCheckbox: (event: React.ChangeEvent<HTMLInputElement>, label: string) => void;
 };
 
 export const CheckboxComponent: React.FC<CheckboxComponentProps> = ({ label, onChangeCheckbox }) => {
   return (
     <label>
-      <input type="checkBox" name={label} onChange={(e) => onChangeCheckbox(e)} />
+      <input type="checkBox" name={label} onChange={(e) => onChangeCheckbox(e, label)} />
       {label}
     </label>
   );
