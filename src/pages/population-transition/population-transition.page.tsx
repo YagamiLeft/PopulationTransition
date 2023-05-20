@@ -1,15 +1,27 @@
-import React from 'react';
-import { getPrefecturesAPI } from '../../api/prefectures/prefectures.api';
+import React, { useCallback, useEffect, useState } from 'react';
+import { getPrefecturesAPI, PrefectureList } from '../../api/prefectures/prefectures.api';
 import {
   PopulationTransitionTemplate,
   PopulationTransitionTemplateProps,
 } from '../../components/templates/population-transition/population-transition.template';
 
 export const PopulationTransitionPage: React.FC = () => {
-  const { data: prefectureData, isLoading, error } = getPrefecturesAPI();
+  const [prefectureList, setPrefectureList] = useState<PrefectureList[]>([]);
 
-  if (isLoading) return <div>Loading</div>;
-  if (error) return <div>Error</div>;
+  const fetchPrefectures = useCallback(async () => {
+    const result = await getPrefecturesAPI();
+    setPrefectureList((prevList) => {
+      if (JSON.stringify(prevList) === JSON.stringify(result.result)) {
+        return prevList;
+      } else {
+        return result.result;
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    fetchPrefectures();
+  }, [fetchPrefectures]);
 
   const onChangeCheckbox = (event: React.ChangeEvent<HTMLInputElement>, label: string) => {
     console.log(event.target.checked);
@@ -17,7 +29,7 @@ export const PopulationTransitionPage: React.FC = () => {
   };
 
   const props: PopulationTransitionTemplateProps = {
-    prefectureList: prefectureData ? prefectureData.result.map((data) => data.prefName) : [],
+    prefectureList: prefectureList.map((data) => data.prefName),
     onChangeCheckbox,
   };
   return <PopulationTransitionTemplate {...props} />;
