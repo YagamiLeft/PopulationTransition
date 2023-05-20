@@ -1,6 +1,5 @@
 import './wdyr.ts';
 import React from 'react';
-import logo from './logo.svg';
 import './App.scss';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { PopulationTransitionPage } from './pages/population-transition/population-transition.page';
