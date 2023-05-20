@@ -13,7 +13,7 @@ export const CheckboxListComponent: React.FC<CheckboxListComponentProps> = ({ la
     <div className="checkbox-list-component">
       {labels.map((label) => {
         return (
-          <span key={label}>
+          <span key={label} className="ceckbox-item">
             <CheckboxComponent label={label} onChangeCheckbox={onChangeCheckbox} />
           </span>
         );
