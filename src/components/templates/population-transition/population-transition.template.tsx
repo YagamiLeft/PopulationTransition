@@ -6,6 +6,7 @@ import {
   CheckboxListComponentProps,
 } from '../../organisms/checkbox-list/checkbox-list.component';
 import { HeaderComponent } from '../../organisms/header/header.component';
+import { LoadingComponent } from '../../organisms/loading/loading.component';
 import { RadioGroupComponent, RadioGroupComponentProps } from '../../organisms/radio-group/radio-group.component';
 
 import './popuration-transition.template.scss';
@@ -19,6 +20,7 @@ export type PopulationTransitionTemplateProps = {
   checkboxComponentProps: CheckboxListComponentProps;
   radioGroupComponentProps: RadioGroupComponentProps;
   populationCompositionList: PopulationCompositionList[];
+  isLoading: boolean;
   chartDataType: string;
 };
 
@@ -26,8 +28,13 @@ export const PopulationTransitionTemplate: React.FC<PopulationTransitionTemplate
   checkboxComponentProps,
   radioGroupComponentProps,
   populationCompositionList,
+  isLoading,
   chartDataType,
 }) => {
+  if (isLoading) {
+    return <LoadingComponent isLoading={isLoading} />;
+  }
+
   const xAxisYears = [1980, 1990, 2000, 2010, 2020];
   const option = {
     tooltip: {
@@ -68,6 +75,7 @@ export const PopulationTransitionTemplate: React.FC<PopulationTransitionTemplate
       };
     }),
   };
+
   return (
     <>
       <HeaderComponent title="人口推移" />
