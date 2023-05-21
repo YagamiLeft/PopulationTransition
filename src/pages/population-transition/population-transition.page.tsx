@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { getPopulationCompositionAPI } from '../../api/population-composition/population-composition.api';
 import { getPrefecturesAPI, PrefectureList } from '../../api/prefectures/prefectures.api';
+import { CheckboxListComponentProps } from '../../components/organisms/checkbox-list/checkbox-list.component';
+import { RadioGroupComponentProps } from '../../components/organisms/radio-group/radio-group.component';
 import {
   PopulationCompositionList,
   PopulationTransitionTemplate,
@@ -10,6 +12,7 @@ import {
 export const PopulationTransitionPage: React.FC = () => {
   const [prefectureList, setPrefectureList] = useState<PrefectureList[]>([]);
   const [populationCompositionList, setPopulationCompositionList] = useState<PopulationCompositionList[]>([]);
+  const [chartDataType, setChartDataType] = useState('総人口');
 
   const fetchPrefectures = useCallback(async () => {
     getPrefecturesAPI().then((result) => {
@@ -47,10 +50,22 @@ export const PopulationTransitionPage: React.FC = () => {
     }
   };
 
-  const props: PopulationTransitionTemplateProps = {
-    prefectureList: prefectureList.map((data) => data.prefName),
-    populationCompositionList,
+  const checkboxComponentProps: CheckboxListComponentProps = {
+    labels: prefectureList.map((data) => data.prefName),
     onChangeCheckbox,
+  };
+
+  const radioGroupComponentProps: RadioGroupComponentProps = {
+    labels: ['総人口', '年少人口', '生産年齢人口', '老年人口'],
+    checkedLabel: chartDataType,
+    onChangeRadio: (event) => setChartDataType(event.target.value),
+  };
+
+  const props: PopulationTransitionTemplateProps = {
+    checkboxComponentProps,
+    populationCompositionList,
+    radioGroupComponentProps,
+    chartDataType,
   };
   return <PopulationTransitionTemplate {...props} />;
 };
