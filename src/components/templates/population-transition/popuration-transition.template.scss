@@ -1,7 +1,15 @@
 .population-transition-template {
   padding: 100px;
+  height: 100%;
+  @media screen and (max-width: 960px) {
+    padding: 60px;
+  }
 
   .prefecture-list {
     margin-bottom: 50px;
+  }
+
+  .chart-area {
+    height: 800px;
   }
 }

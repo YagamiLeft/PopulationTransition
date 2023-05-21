@@ -75,19 +75,19 @@ export const PopulationTransitionTemplate: React.FC<PopulationTransitionTemplate
   return (
     <>
       <HeaderComponent title="人口推移" />
-      <LoadingComponent isLoading={isLoading} />;
-      <main className="population-transition-template">
+
+      <div className="population-transition-template">
+        <LoadingComponent isLoading={isLoading} />
         <div className="prefecture-list">
           <CheckboxListComponent {...checkboxComponentProps} />
         </div>
-
         {option.series.length > 0 && (
           <>
             <RadioGroupComponent {...radioGroupComponentProps} />
             <ChartComponent chartOption={option} />
           </>
         )}
-      </main>
+      </div>
     </>
   );
 };
