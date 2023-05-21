@@ -1,3 +1,6 @@
 h1 {
   margin: 0;
 }
+body > #root > div {
+  height: calc(100vh - 200px);
+}

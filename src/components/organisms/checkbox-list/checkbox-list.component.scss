@@ -5,5 +5,8 @@
 
   .ceckbox-item {
     width: 10%;
+    @media screen and (max-width: 960px) {
+      width: 30%;
+    }
   }
 }
