@@ -1,13 +1,15 @@
 import React from 'react';
 import { RadioComponent, RadioComponentProps } from '../../parts/radio/radio.component';
 
-export type radioGroupComponent = {
+import './radio-group.component.scss';
+
+export type RadioGroupComponentProps = {
   labels: string[];
   checkedLabel: string;
   onChangeRadio: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export const RadioGroupComponent: React.FC<radioGroupComponent> = ({ labels, checkedLabel, onChangeRadio }) => {
+export const RadioGroupComponent: React.FC<RadioGroupComponentProps> = ({ labels, checkedLabel, onChangeRadio }) => {
   return (
     <fieldset className="radio-group-component">
       {labels.map((label) => {

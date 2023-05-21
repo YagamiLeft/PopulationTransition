@@ -1,8 +1,12 @@
 import React from 'react';
 import { PopulationList } from '../../../api/population-composition/population-composition.api';
 import { ChartComponent } from '../../organisms/chart/chart.component';
-import { CheckboxListComponent } from '../../organisms/checkbox-list/checkbox-list.component';
+import {
+  CheckboxListComponent,
+  CheckboxListComponentProps,
+} from '../../organisms/checkbox-list/checkbox-list.component';
 import { HeaderComponent } from '../../organisms/header/header.component';
+import { RadioGroupComponent, RadioGroupComponentProps } from '../../organisms/radio-group/radio-group.component';
 
 import './popuration-transition.template.scss';
 
@@ -12,15 +16,17 @@ export type PopulationCompositionList = {
 };
 
 export type PopulationTransitionTemplateProps = {
-  prefectureList: string[];
+  checkboxComponentProps: CheckboxListComponentProps;
+  radioGroupComponentProps: RadioGroupComponentProps;
   populationCompositionList: PopulationCompositionList[];
-  onChangeCheckbox: (event: React.ChangeEvent<HTMLInputElement>, label: string) => void;
+  chartDataType: string;
 };
 
 export const PopulationTransitionTemplate: React.FC<PopulationTransitionTemplateProps> = ({
-  prefectureList,
+  checkboxComponentProps,
+  radioGroupComponentProps,
   populationCompositionList,
-  onChangeCheckbox,
+  chartDataType,
 }) => {
   const xAxisYears = [1980, 1990, 2000, 2010, 2020];
   const option = {
@@ -50,7 +56,7 @@ export const PopulationTransitionTemplate: React.FC<PopulationTransitionTemplate
       type: 'value',
     },
     series: populationCompositionList.map((data) => {
-      const [specifyData] = data.data.filter((dataByType) => dataByType.label === '総人口');
+      const [specifyData] = data.data.filter((dataByType) => dataByType.label === chartDataType);
       return {
         name: data.prefName,
         type: 'line',
@@ -68,11 +74,18 @@ export const PopulationTransitionTemplate: React.FC<PopulationTransitionTemplate
 
       <main className="population-transition-template">
         <div className="prefecture-list">
-          <CheckboxListComponent labels={prefectureList} onChangeCheckbox={onChangeCheckbox} />
+          <CheckboxListComponent {...checkboxComponentProps} />
         </div>
 
-        <ChartComponent chartOption={option} />
+        {option.series.length > 0 && (
+          <>
+            <RadioGroupComponent {...radioGroupComponentProps} />
+            <ChartComponent chartOption={option} />
+          </>
+        )}
       </main>
     </>
   );
 };
+
+PopulationTransitionTemplate.whyDidYouRender = true;
