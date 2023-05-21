@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { getPopulationCompositionAPI } from '../../api/population-composition/population-composition.api';
 import { getPrefecturesAPI, PrefectureList } from '../../api/prefectures/prefectures.api';
 import { CheckboxListComponentProps } from '../../components/organisms/checkbox-list/checkbox-list.component';
@@ -8,22 +8,27 @@ import {
   PopulationTransitionTemplate,
   PopulationTransitionTemplateProps,
 } from '../../components/templates/population-transition/population-transition.template';
+import { LoadingContext } from '../../contexts/Loading.context';
 
 export const PopulationTransitionPage: React.FC = () => {
+  const { isLoading, setIsLoading } = useContext(LoadingContext);
   const [prefectureList, setPrefectureList] = useState<PrefectureList[]>([]);
   const [populationCompositionList, setPopulationCompositionList] = useState<PopulationCompositionList[]>([]);
   const [chartDataType, setChartDataType] = useState('総人口');
 
   const fetchPrefectures = useCallback(async () => {
-    getPrefecturesAPI().then((result) => {
-      setPrefectureList((prevList) => {
-        if (JSON.stringify(prevList) === JSON.stringify(result.result)) {
-          return prevList;
-        } else {
-          return result.result;
-        }
-      });
-    });
+    setIsLoading(true);
+    getPrefecturesAPI()
+      .then((result) => {
+        setPrefectureList((prevList) => {
+          if (JSON.stringify(prevList) === JSON.stringify(result.result)) {
+            return prevList;
+          } else {
+            return result.result;
+          }
+        });
+      })
+      .finally(() => setIsLoading(false));
   }, []);
 
   useEffect(() => {
@@ -34,15 +39,18 @@ export const PopulationTransitionPage: React.FC = () => {
     const isChecked = event.target.checked;
     const [specifyPrefecture] = prefectureList.filter((pref) => pref.prefName === label);
     if (isChecked) {
-      getPopulationCompositionAPI(specifyPrefecture.prefCode).then((result) => {
-        setPopulationCompositionList([
-          ...populationCompositionList,
-          {
-            prefName: label,
-            data: result.result.data,
-          },
-        ]);
-      });
+      setIsLoading(true);
+      getPopulationCompositionAPI(specifyPrefecture.prefCode)
+        .then((result) => {
+          setPopulationCompositionList([
+            ...populationCompositionList,
+            {
+              prefName: label,
+              data: result.result.data,
+            },
+          ]);
+        })
+        .finally(() => setIsLoading(false));
     } else {
       setPopulationCompositionList(
         [...populationCompositionList].filter((cpmposition) => cpmposition.prefName !== label),
@@ -65,6 +73,7 @@ export const PopulationTransitionPage: React.FC = () => {
     checkboxComponentProps,
     populationCompositionList,
     radioGroupComponentProps,
+    isLoading,
     chartDataType,
   };
   return <PopulationTransitionTemplate {...props} />;
