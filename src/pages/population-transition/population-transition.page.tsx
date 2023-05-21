@@ -8,7 +8,7 @@ import {
   PopulationTransitionTemplate,
   PopulationTransitionTemplateProps,
 } from '../../components/templates/population-transition/population-transition.template';
-import { LoadingContext } from '../../contexts/Loading.context';
+import { LoadingContext } from '../../contexts/Lading.context';
 
 export const PopulationTransitionPage: React.FC = () => {
   const { isLoading, setIsLoading } = useContext(LoadingContext);

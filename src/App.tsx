@@ -3,7 +3,7 @@ import React from 'react';
 import './App.scss';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { PopulationTransitionPage } from './pages/population-transition/population-transition.page';
-import { LoadingProvider } from './contexts/Loading.context';
+import { LoadingProvider } from './contexts/Lading.context';
 
 function App() {
   return (
