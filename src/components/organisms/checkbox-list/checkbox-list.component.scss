@@ -1,0 +1,9 @@
+.checkbox-list-component {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  .ceckbox-item {
+    width: 10%;
+  }
+}
