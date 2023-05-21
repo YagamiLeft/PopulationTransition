@@ -7,6 +7,5 @@ test('renders heading component with given children', () => {
 
   const { getByText } = render(<HeadingPrimary>{mockChildren}</HeadingPrimary>);
 
-  // 子要素が正しくレンダリングされたことを確認するアサーション
   expect(getByText(mockChildren)).toBeInTheDocument();
 });

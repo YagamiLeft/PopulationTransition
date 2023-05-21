@@ -7,6 +7,5 @@ test('renders header component with given title', () => {
 
   const { getByText } = render(<HeaderComponent title={mockTitle} />);
 
-  // タイトルが正しくレンダリングされたことを確認するアサーション
   expect(getByText(mockTitle)).toBeInTheDocument();
 });

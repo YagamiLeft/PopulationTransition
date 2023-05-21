@@ -11,7 +11,6 @@ test('renders radio group component with given labels', () => {
     <RadioGroupComponent labels={mockLabels} checkedLabel={mockCheckedLabel} onChangeRadio={mockOnChangeRadio} />,
   );
 
-  // 各オプションが正しくレンダリングされたことを確認するアサーション
   mockLabels.forEach((label) => {
     expect(getByLabelText(label)).toBeInTheDocument();
   });
@@ -26,9 +25,7 @@ test('calls onChangeRadio handler when radio button is clicked', () => {
     <RadioGroupComponent labels={mockLabels} checkedLabel={mockCheckedLabel} onChangeRadio={mockOnChangeRadio} />,
   );
 
-  // ラジオボタンをクリックするイベントをシミュレート
   fireEvent.click(getByLabelText(mockLabels[0]));
 
-  // onChangeRadioハンドラが呼び出されたことを確認するアサーション
   expect(mockOnChangeRadio).toHaveBeenCalled();
 });

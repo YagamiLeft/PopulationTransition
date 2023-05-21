@@ -9,10 +9,8 @@ test('renders checkbox component with given label', () => {
     <CheckboxComponent label={mockLabel} onChangeCheckbox={mockOnChangeCheckbox} />,
   );
 
-  // チェックボックスが正しくレンダリングされたことを確認するアサーション
   expect(getByLabelText(mockLabel)).toBeInTheDocument();
 
-  // ラベルが正しくレンダリングされたことを確認するアサーション
   expect(getByText(mockLabel)).toBeInTheDocument();
 });
 
@@ -22,9 +20,7 @@ test('calls onChangeCheckbox handler when checkbox is clicked', () => {
 
   const { getByLabelText } = render(<CheckboxComponent label={mockLabel} onChangeCheckbox={mockOnChangeCheckbox} />);
 
-  // チェックボックスをクリックするイベントをシミュレート
   fireEvent.click(getByLabelText(mockLabel));
 
-  // onChangeCheckboxハンドラが呼び出されたことを確認するアサーション
   expect(mockOnChangeCheckbox).toHaveBeenCalled();
 });
